@@ -4,8 +4,10 @@ import org.springframework.stereotype.Component;
 
 import com.cognizant.flightbooking.dtos.AddressDto;
 import com.cognizant.flightbooking.dtos.AirlineDto;
+import com.cognizant.flightbooking.dtos.FlightScedulDto;
 import com.cognizant.flightbooking.models.Address;
 import com.cognizant.flightbooking.models.Airline;
+import com.cognizant.flightbooking.models.FlightSchedule;
 
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
@@ -39,6 +41,26 @@ class AddressCustomMapper extends CustomMapper<AirlineDto, Airline>{
 			address.setState(addressDto.getState());
 			airline.getOwnerAddress().add(address);
 		});
+		airline.getFlightSchedules().clear();
+		airlineDto.getFlights().forEach(flightsDto->{
+			FlightSchedule flightSchedule = new FlightSchedule();
+			flightSchedule.setTakeOff(flightsDto.getTakeOff());
+			flightSchedule.setLandingTime(flightsDto.getTakeOff());
+			flightSchedule.setAirCraft(flightsDto.getAirCraft());
+			flightSchedule.setDays(flightsDto.getDays());
+			flightSchedule.setBussinessClassSeats(flightsDto.getBussinessClassSeats());
+			flightSchedule.setBussinessClassSeatCost(flightsDto.getBussinessClassSeatCost());
+			flightSchedule.setFirstClassSeats(flightsDto.getFirstClassSeats());
+			flightSchedule.setFirstClassSeatCost(flightsDto.getFirstClassSeatCost());
+			flightSchedule.setSecondClassSeats(flightsDto.getSecondClassSeats());
+			flightSchedule.setSecondClassSeatCost(flightsDto.getSecondClassSeatCost());
+			flightSchedule.setThirdClassSeats(flightsDto.getThirdClassSeats());
+			flightSchedule.setThirdClassSeatCost(flightsDto.getThirdClassSeatCost());
+			flightSchedule.setMeal(flightsDto.getMeal());
+			flightSchedule.setFromCity(flightsDto.getFromCity());
+			flightSchedule.setToCity(flightsDto.getToCity());
+			airline.getFlightSchedules().add(flightSchedule);
+		});
 	}
 
 	@Override
@@ -52,5 +74,28 @@ class AddressCustomMapper extends CustomMapper<AirlineDto, Airline>{
 			addressDto.setState(address.getState());
 			airlineDto.getOwnerAddress().add(addressDto);
 		});
+		
+		
+		airlineDto.getFlights().clear();
+		airline.getFlightSchedules().forEach(flightSchedule->{
+			FlightScedulDto flightScheduleDto = new FlightScedulDto();
+			flightScheduleDto.setTakeOff(flightSchedule.getTakeOff());
+			flightScheduleDto.setLandingTime(flightSchedule.getTakeOff());
+			flightScheduleDto.setAirCraft(flightSchedule.getAirCraft());
+			flightScheduleDto.setDays(flightSchedule.getDays());
+			flightScheduleDto.setBussinessClassSeats(flightSchedule.getBussinessClassSeats());
+			flightScheduleDto.setBussinessClassSeatCost(flightSchedule.getBussinessClassSeatCost());
+			flightScheduleDto.setFirstClassSeats(flightSchedule.getFirstClassSeats());
+			flightScheduleDto.setFirstClassSeatCost(flightSchedule.getFirstClassSeatCost());
+			flightScheduleDto.setSecondClassSeats(flightSchedule.getSecondClassSeats());
+			flightScheduleDto.setSecondClassSeatCost(flightSchedule.getSecondClassSeatCost());
+			flightScheduleDto.setThirdClassSeats(flightSchedule.getThirdClassSeats());
+			flightScheduleDto.setThirdClassSeatCost(flightSchedule.getThirdClassSeatCost());
+			flightScheduleDto.setMeal(flightSchedule.getMeal());
+			flightScheduleDto.setFromCity(flightSchedule.getFromCity());
+			flightScheduleDto.setToCity(flightSchedule.getToCity());
+			airlineDto.getFlights().add(flightScheduleDto);
+		});
 	}
 }
+

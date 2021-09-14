@@ -2,17 +2,22 @@ package com.cognizant.flightbooking.dtos;
 
 import java.util.Set;
 
-import com.cognizant.flightbooking.models.Address;
-
 public class AirlineDto {
 	private String airlineName;
 	private String ownerName;
 	private String ownerMobile;
 	private Set<AddressDto> ownerAddress;
+	private Set<FlightScedulDto> flights;
 	private String airlineLogo;
 	private Long totFlights;
 	private Long activeFlights;
 	private String status;
+	public Set<FlightScedulDto> getFlights() {
+		return flights;
+	}
+	public void setFlights(Set<FlightScedulDto> flights) {
+		this.flights = flights;
+	}
 	public String getStatus() {
 		return status;
 	}

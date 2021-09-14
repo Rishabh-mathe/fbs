@@ -34,6 +34,9 @@ public class Airline implements Serializable{
 	@OneToMany(mappedBy = "airline", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Address> ownerAddress;
 	
+	@OneToMany(mappedBy = "airline", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<FlightSchedule> flightSchedules;
+	
 	private String airlineLogo;
 	
 	private Long totFlights;
@@ -41,6 +44,14 @@ public class Airline implements Serializable{
 	private Long activeFlights;
 	
 	private String status;
+
+	public Set<FlightSchedule> getFlightSchedules() {
+		return flightSchedules;
+	}
+
+	public void setFlightSchedules(Set<FlightSchedule> flightSchedules) {
+		this.flightSchedules = flightSchedules;
+	}
 
 	public String getStatus() {
 		return status;
