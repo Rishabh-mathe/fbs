@@ -1,7 +1,5 @@
 package com.cognizant.flightbooking.services;
 
-import java.util.ArrayList;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.cognizant.flightbooking.dtos.BookFlightDto;
 import com.cognizant.flightbooking.mapper.FlightBookingMapper;
 import com.cognizant.flightbooking.models.BookFlightTicket;
-import com.cognizant.flightbooking.models.FlightSchedule;
 import com.cognizant.flightbooking.models.PassangerDtl;
 import com.cognizant.flightbooking.repos.BookiFlightRepo;
 import com.cognizant.flightbooking.repos.FlightScheduleRepo;
@@ -52,7 +49,7 @@ public class BookFlightService {
 			selFlight = flightScheduleRepo.findById(flightTicket.getFlightId()).get().getBussinessClassSeats();
 		}
 		Long availableSeats = selFlight - bookiFlightRepo.findByFlightIdAndDateOfJourneyAndBookingClass(flightTicket.getFlightId(),flightTicket.getDateOfJourney(),flightTicket.getBookingClass());
-		BookFlightDto flightDto = null;
+//		BookFlightDto flightDto = null;
 		if(availableSeats >= flightTicket.getTotTickets()) {
 			BookFlightTicket bookedFlight = bookiFlightRepo.save(flightTicket);
 			passangers.stream().forEach(passanger-> {
@@ -60,7 +57,7 @@ public class BookFlightService {
 				passanger.setBookFlightTicket(bookedFlight);
 				passangerDtlRepo.save(passanger);
 			});
-			flightDto = flightBookingMapper.map(bookedFlight, BookFlightDto.class);
+//			flightDto = flightBookingMapper.map(bookedFlight, BookFlightDto.class);
 			return new ResponseEntity<String>("Booked Successfully", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(availableSeats+" Seats are available", HttpStatus.IM_USED);

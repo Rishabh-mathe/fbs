@@ -1,11 +1,18 @@
 package com.cognizant.flightbooking.dtos;
 
 public class PassangerDtlDto {
+	private long id;
 	private String passangerName;
 	private long passangerAge;
 	private String foodType;
 	private Character gender;
 	private String ticketStatus;
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getTicketStatus() {
 		return ticketStatus;
 	}

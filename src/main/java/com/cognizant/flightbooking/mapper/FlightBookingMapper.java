@@ -1,5 +1,7 @@
 package com.cognizant.flightbooking.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.cognizant.flightbooking.dtos.BookFlightDto;
 import com.cognizant.flightbooking.dtos.PassangerDtlDto;
 import com.cognizant.flightbooking.models.BookFlightTicket;
@@ -10,6 +12,7 @@ import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 
+@Component
 public class FlightBookingMapper extends ConfigurableMapper {
 	
 	@Override
@@ -30,6 +33,7 @@ class customPassangerMapper extends CustomMapper<BookFlightDto, BookFlightTicket
 		bookFlightTicket.getPassangerDlt().clear();
 		bookFlightDto.getPassangerDlt().stream().forEach(passanger->{
 			PassangerDtl passangerDtl = new PassangerDtl();
+			passangerDtl.setId(passanger.getId());
 			passangerDtl.setFoodType(passanger.getFoodType());
 			passangerDtl.setGender(passanger.getGender());
 			passangerDtl.setPassangerAge(passanger.getPassangerAge());
@@ -44,6 +48,7 @@ class customPassangerMapper extends CustomMapper<BookFlightDto, BookFlightTicket
 		bookFlightDto.getPassangerDlt().clear();
 		bookFlightTicket.getPassangerDlt().stream().forEach(passanger->{
 			PassangerDtlDto passangerDtl = new PassangerDtlDto();
+			passangerDtl.setId(passanger.getId());
 			passangerDtl.setFoodType(passanger.getFoodType());
 			passangerDtl.setGender(passanger.getGender());
 			passangerDtl.setPassangerAge(passanger.getPassangerAge());

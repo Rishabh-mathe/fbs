@@ -10,6 +10,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,7 @@ import com.cognizant.flightbooking.services.UserRoleService;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 public class UserController {
 	@Autowired
     private AuthenticationManager authenticationManager;
@@ -55,6 +57,7 @@ public class UserController {
     
     @PostMapping("/register")
     public User registerUser(@RequestBody UserDto user) {
+    	user.setUsername(user.getEmail());
     	return userRoleService.saveUser(user);
     }
     
