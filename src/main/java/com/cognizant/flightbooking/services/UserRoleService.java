@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -57,8 +59,8 @@ public class UserRoleService implements UserDetailsService {
     }
 	
 	@Transactional
-	public User saveUser(UserDto user) {
-		User savedUser = null;
+	public ResponseEntity<String> saveUser(UserDto user) {
+		//UserDto userDtoFromUSer = null;
 		try {
 			User nUser = user.getUserFromDto();
 			Role role = roleRepo.findRoleByName("USER");
@@ -68,11 +70,12 @@ public class UserRoleService implements UserDetailsService {
 	        userRole.add(role);
 	        userRepo.save(nUser);
 	        nUser.setRole(userRole);
-	        savedUser = userRepo.save(nUser);
+	        User savedUser = userRepo.save(nUser);
+	        return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
         
-		return savedUser;
+		
 	}
 }

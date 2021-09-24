@@ -10,9 +10,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Airline implements Serializable{
 
 	/**
@@ -31,10 +37,18 @@ public class Airline implements Serializable{
 	
 	private String ownerMobile;
 	
-	@OneToMany(mappedBy = "airline", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private String ownerEmail;
+	
+//	@JsonManagedReference
+//	@OneToMany(targetEntity = Address.class,cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Address.class,cascade = CascadeType.ALL)
+    @JoinColumn(name ="airline_fk",referencedColumnName = "id")
 	private Set<Address> ownerAddress;
 	
-	@OneToMany(mappedBy = "airline", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@JsonManagedReference
+//	@OneToMany(targetEntity = FlightSchedule.class,cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = FlightSchedule.class,cascade = CascadeType.ALL)
+    @JoinColumn(name ="airline_fk",referencedColumnName = "id")
 	private Set<FlightSchedule> flightSchedules;
 	
 	private String airlineLogo;
@@ -44,6 +58,14 @@ public class Airline implements Serializable{
 	private Long activeFlights;
 	
 	private String status;
+
+	public String getOwnerEmail() {
+		return ownerEmail;
+	}
+
+	public void setOwnerEmail(String ownerEmail) {
+		this.ownerEmail = ownerEmail;
+	}
 
 	public Set<FlightSchedule> getFlightSchedules() {
 		return flightSchedules;

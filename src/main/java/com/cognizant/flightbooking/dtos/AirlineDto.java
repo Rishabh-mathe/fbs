@@ -7,16 +7,16 @@ public class AirlineDto {
 	private String ownerName;
 	private String ownerMobile;
 	private Set<AddressDto> ownerAddress;
-	private Set<FlightScedulDto> flights;
+	private Set<FlightScedulDto> flightSchedules;
 	private String airlineLogo;
 	private Long totFlights;
 	private Long activeFlights;
 	private String status;
-	public Set<FlightScedulDto> getFlights() {
-		return flights;
+	public Set<FlightScedulDto> getFlightSchedules() {
+		return flightSchedules;
 	}
-	public void setFlights(Set<FlightScedulDto> flights) {
-		this.flights = flights;
+	public void setFlightSchedules(Set<FlightScedulDto> flightSchedules) {
+		this.flightSchedules = flightSchedules;
 	}
 	public String getStatus() {
 		return status;

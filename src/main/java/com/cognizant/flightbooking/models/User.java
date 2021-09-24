@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.cognizant.flightbooking.dtos.UserDto;
+import com.sun.istack.NotNull;
+
 @Entity
 public class User implements Serializable {
 
@@ -25,14 +28,19 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@NotNull
 	private String userName;
 	
+	@NotNull
 	private String password;
 	
+	@NotNull
 	private String email;
 	
+	@NotNull
 	private String name;
 	
+	@NotNull
 	private String phone;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -94,6 +102,14 @@ public class User implements Serializable {
 	public void setRole(Set<Role> role) {
 		this.role = role;
 	}
-	
+	public UserDto getUserDtoFromUSer(){
+        UserDto user = new UserDto();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setName(name);
+        
+        return user;
+    }
 	
 }

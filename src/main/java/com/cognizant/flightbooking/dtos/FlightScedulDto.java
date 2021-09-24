@@ -1,6 +1,7 @@
 package com.cognizant.flightbooking.dtos;
 
 import java.time.LocalTime;
+import java.util.Set;
 
 public class FlightScedulDto {
 private LocalTime takeOff;
@@ -9,7 +10,7 @@ private LocalTime takeOff;
 	
 	private Long airCraft;
 	
-	private String days;
+	private String[] daysDto;
 	
 	private Long bussinessClassSeats;
 	
@@ -33,6 +34,26 @@ private LocalTime takeOff;
 	
 	private Long toCity;
 	
+	private Long discount;
+	
+	
+	
+	public String[] getDaysDto() {
+		return daysDto;
+	}
+
+	public void setDaysDto(String[] daysDto) {
+		this.daysDto = daysDto;
+	}
+
+	public Long getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Long discount) {
+		this.discount = discount;
+	}
+
 	public LocalTime getTakeOff() {
 		return takeOff;
 	}
@@ -55,14 +76,6 @@ private LocalTime takeOff;
 
 	public void setAirCraft(Long airCraft) {
 		this.airCraft = airCraft;
-	}
-
-	public String getDays() {
-		return days;
-	}
-
-	public void setDays(String days) {
-		this.days = days;
 	}
 
 	public Long getBussinessClassSeats() {

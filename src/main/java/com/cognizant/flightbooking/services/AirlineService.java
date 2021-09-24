@@ -1,11 +1,14 @@
 package com.cognizant.flightbooking.services;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.cognizant.flightbooking.dtos.AirlineDto;
@@ -33,6 +36,7 @@ public class AirlineService {
 	private FlightScheduleRepo flightScheduleRepo;
 
 	
+	@Transactional
 	public AirlineDto saveAirline(AirlineDto airlineDto) {
 		airlineDto.setStatus("active");
 		Airline airline = airlineMapper.map(airlineDto, Airline.class);
@@ -46,11 +50,11 @@ public class AirlineService {
 		airline.getFlightSchedules().clear();
 		Airline airlineSaved = airlineRepo.save(airline);
 		ownerAddress.stream().forEach(ownerAddr->{
-			ownerAddr.setAirline(airlineSaved);
+			ownerAddr.setAirlineFk(airlineSaved.getId());
 			addressRepo.save(ownerAddr);
 		});
 		flights.stream().forEach(flight->{
-			flight.setAirline(airlineSaved);
+			flight.setAirlineFk(airlineSaved.getId());
 			flightScheduleRepo.save(flight);
 		});
 		AirlineDto airlineDtoSaved = airlineMapper.map(airlineSaved, AirlineDto.class);
@@ -62,6 +66,15 @@ public class AirlineService {
 		System.out.println(airLineName);
 		airlineRepo.updateByName(airLineName,"inActive");
 		return true;
+	}
+	
+	public ResponseEntity<AirlineDto> getAirline(Long id) {
+		if(id == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		Airline airline = airlineRepo.findById(id).get();
+		AirlineDto airlineDto = airlineMapper.map(airline, AirlineDto.class);
+		return new ResponseEntity<>(airlineDto, HttpStatus.OK);
 	}
 
 }

@@ -2,18 +2,17 @@ package com.cognizant.flightbooking.models;
 
 import java.time.LocalTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.cognizant.flightbooking.dtos.FlightScedulDto;
-
 @Entity
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "flightCode")
 @Table(name = "flight_schedule")
 public class FlightSchedule {
 	
@@ -51,7 +50,33 @@ public class FlightSchedule {
 	
 	private Long toCity;
 	
-	public long getAirCraft() {
+	private Long discount;
+	
+//	@JsonBackReference
+//	@ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "airline_fk", insertable = false, updatable = false)
+	private Airline airline;
+	
+	private long airline_fk;
+
+	public long getAirlineFk() {
+		return airline_fk;
+	}
+
+	public void setAirlineFk(long airlineFk) {
+		this.airline_fk = airlineFk;
+	}
+	
+	public Long getDiscount() {
+		return discount;
+	}
+	public void setDiscount(Long discount) {
+		this.discount = discount;
+	}
+	public void setAirCraft(Long airCraft) {
+		this.airCraft = airCraft;
+	}
+	public Long getAirCraft() {
 		return airCraft;
 	}
 	public void setAirCraft(long airCraft) {
@@ -100,9 +125,7 @@ public class FlightSchedule {
 		this.airline = airline;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "airline_fk", nullable = false)
-	private Airline airline;
+
 
 	public Long getFromCity() {
 		return fromCity;

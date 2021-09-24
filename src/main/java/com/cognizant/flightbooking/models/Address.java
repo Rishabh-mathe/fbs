@@ -2,15 +2,20 @@ package com.cognizant.flightbooking.models;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Address implements Serializable {
 
 	/**
@@ -30,9 +35,21 @@ public class Address implements Serializable {
 	
 	private String state;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "airline_fk", nullable = false)
+//	@JsonIgnore
+//	@JsonBackReference
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "airline_fk", updatable = false, insertable = false)
 	private Airline airline;
+	
+	private long airline_fk;
+
+	public long getAirlineFk() {
+		return airline_fk;
+	}
+
+	public void setAirlineFk(long airlineFk) {
+		this.airline_fk = airlineFk;
+	}
 
 	public Airline getAirline() {
 		return airline;
