@@ -38,8 +38,12 @@ class AirlineServiceTest {
 
 	@Test
 	void testSaveAirline() {
-		//AirlineDto airlineDto = new AirlineDto();
-		//service.saveAirline(airlineDto);
+		Airline airline = new Airline();
+		AirlineDto airlineDto = new AirlineDto();
+		airlineDto.setActiveFlights(20L);
+		when(airlineMapper.map(airlineDto , Airline.class)).thenReturn(airline);
+		AirlineDto savedAirlineDto = service.saveAirline(airlineDto);
+		assertEquals(20L, savedAirlineDto.getActiveFlights());
 	}
 
 	@Test

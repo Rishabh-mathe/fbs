@@ -6,11 +6,10 @@ import java.util.Set;
 import com.cognizant.flightbooking.models.PassangerDtl;
 
 public class BookFlightDto {
-	private long id;
-	private long numberOfBooking;
-	private Set<PassangerDtlDto> passangerDlt;
-	private long loggedInUserId;
-	private long flightId;
+	private Long id;
+	private Set<PassangerDtlDto> passangerDtl;
+	private String loggedInUserId;
+	private String flightId;
 	private LocalDate dateOfJourney;
 	private String bookingClass;
 	private long totTickets;
@@ -32,34 +31,28 @@ public class BookFlightDto {
 	public void setTotTickets(long totTickets) {
 		this.totTickets = totTickets;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public long getNumberOfBooking() {
-		return numberOfBooking;
+	public Set<PassangerDtlDto> getPassangerDtl() {
+		return passangerDtl;
 	}
-	public void setNumberOfBooking(long numberOfBooking) {
-		this.numberOfBooking = numberOfBooking;
+	public void setPassangerDtl(Set<PassangerDtlDto> passangerDlt) {
+		this.passangerDtl = passangerDlt;
 	}
-	public Set<PassangerDtlDto> getPassangerDlt() {
-		return passangerDlt;
-	}
-	public void setPassangerDlt(Set<PassangerDtlDto> passangerDlt) {
-		this.passangerDlt = passangerDlt;
-	}
-	public long getLoggedInUserId() {
+	public String getLoggedInUserId() {
 		return loggedInUserId;
 	}
-	public void setLoggedInUserId(long loggedInUserId) {
+	public void setLoggedInUserId(String loggedInUserId) {
 		this.loggedInUserId = loggedInUserId;
 	}
-	public long getFlightId() {
+	public String getFlightId() {
 		return flightId;
 	}
-	public void setFlightId(long flightId) {
+	public void setFlightId(String flightId) {
 		this.flightId = flightId;
 	}
 }

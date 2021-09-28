@@ -4,12 +4,14 @@ import java.time.LocalTime;
 import java.util.Set;
 
 public class FlightScedulDto {
-private LocalTime takeOff;
+	private Long id;
+	
+	private String flightCode;
+	
+	private LocalTime takeOff;
 	
 	private LocalTime landingTime;
-	
-	private Long airCraft;
-	
+		
 	private String[] daysDto;
 	
 	private Long bussinessClassSeats;
@@ -36,8 +38,22 @@ private LocalTime takeOff;
 	
 	private Long discount;
 	
-	
-	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getFlightCode() {
+		return flightCode;
+	}
+
+	public void setFlightCode(String flightCode) {
+		this.flightCode = flightCode;
+	}
+
 	public String[] getDaysDto() {
 		return daysDto;
 	}
@@ -68,14 +84,6 @@ private LocalTime takeOff;
 
 	public void setLandingTime(LocalTime landingTime) {
 		this.landingTime = landingTime;
-	}
-
-	public Long getAirCraft() {
-		return airCraft;
-	}
-
-	public void setAirCraft(Long airCraft) {
-		this.airCraft = airCraft;
 	}
 
 	public Long getBussinessClassSeats() {

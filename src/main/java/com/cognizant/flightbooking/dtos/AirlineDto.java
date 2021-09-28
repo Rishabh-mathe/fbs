@@ -2,16 +2,40 @@ package com.cognizant.flightbooking.dtos;
 
 import java.util.Set;
 
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.MultipartFilter;
+
 public class AirlineDto {
+	private Long id;
 	private String airlineName;
+	private String airLineShortName;
 	private String ownerName;
 	private String ownerMobile;
+	private String ownerEmail;
 	private Set<AddressDto> ownerAddress;
 	private Set<FlightScedulDto> flightSchedules;
 	private String airlineLogo;
 	private Long totFlights;
 	private Long activeFlights;
 	private String status;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getAirLineShortName() {
+		return airLineShortName;
+	}
+	public void setAirLineShortName(String airLineShortName) {
+		this.airLineShortName = airLineShortName;
+	}
+	public String getOwnerEmail() {
+		return ownerEmail;
+	}
+	public void setOwnerEmail(String ownerEmail) {
+		this.ownerEmail = ownerEmail;
+	}
 	public Set<FlightScedulDto> getFlightSchedules() {
 		return flightSchedules;
 	}

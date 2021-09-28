@@ -1,6 +1,5 @@
 package com.cognizant.flightbooking.services;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cognizant.flightbooking.dtos.AirlineDto;
 import com.cognizant.flightbooking.mapper.AirlineMapper;
@@ -50,11 +50,11 @@ public class AirlineService {
 		airline.getFlightSchedules().clear();
 		Airline airlineSaved = airlineRepo.save(airline);
 		ownerAddress.stream().forEach(ownerAddr->{
-			ownerAddr.setAirlineFk(airlineSaved.getId());
+			ownerAddr.setAirline(airlineSaved);
 			addressRepo.save(ownerAddr);
 		});
 		flights.stream().forEach(flight->{
-			flight.setAirlineFk(airlineSaved.getId());
+			flight.setAirline(airlineSaved);
 			flightScheduleRepo.save(flight);
 		});
 		AirlineDto airlineDtoSaved = airlineMapper.map(airlineSaved, AirlineDto.class);
@@ -75,6 +75,11 @@ public class AirlineService {
 		Airline airline = airlineRepo.findById(id).get();
 		AirlineDto airlineDto = airlineMapper.map(airline, AirlineDto.class);
 		return new ResponseEntity<>(airlineDto, HttpStatus.OK);
+	}
+
+	public void saveAirlineLogo(String airlineName, MultipartFile file) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

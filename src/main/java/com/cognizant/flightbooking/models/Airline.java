@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Airline implements Serializable{
 
 	/**
@@ -39,16 +38,12 @@ public class Airline implements Serializable{
 	
 	private String ownerEmail;
 	
-//	@JsonManagedReference
-//	@OneToMany(targetEntity = Address.class,cascade = CascadeType.ALL)
-	@OneToMany(targetEntity = Address.class,cascade = CascadeType.ALL)
-    @JoinColumn(name ="airline_fk",referencedColumnName = "id")
+	@OneToMany(mappedBy = "airline", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
 	private Set<Address> ownerAddress;
 	
-//	@JsonManagedReference
-//	@OneToMany(targetEntity = FlightSchedule.class,cascade = CascadeType.ALL)
-	@OneToMany(targetEntity = FlightSchedule.class,cascade = CascadeType.ALL)
-    @JoinColumn(name ="airline_fk",referencedColumnName = "id")
+	@OneToMany(mappedBy = "airline", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
 	private Set<FlightSchedule> flightSchedules;
 	
 	private String airlineLogo;

@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -21,12 +22,15 @@ public class BookFlightTicket implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	private long numberOfBooking;
-	@OneToMany(mappedBy = "bookFlightTicket", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<PassangerDtl> passangerDlt;
-	private long loggedInUserId;
-	private long flightId;
+	private Long id;
+	
+//	@OneToMany(targetEntity = BookFlightTicket.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    @JoinColumn(name ="id",referencedColumnName = "id")
+	@OneToMany(mappedBy = "id", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+	private Set<PassangerDtl> passangerDtl;
+	private String loggedInUserId;
+	private String flightId;
 	private LocalDate dateOfJourney;
 	private String bookingClass;
 	private long totTickets;
@@ -48,34 +52,28 @@ public class BookFlightTicket implements Serializable{
 	public void setDateOfJourney(LocalDate dateOfJourney) {
 		this.dateOfJourney = dateOfJourney;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public long getNumberOfBooking() {
-		return numberOfBooking;
+	public Set<PassangerDtl> getPassangerDtl() {
+		return passangerDtl;
 	}
-	public void setNumberOfBooking(long numberOfBooking) {
-		this.numberOfBooking = numberOfBooking;
+	public void setPassangerDtl(Set<PassangerDtl> passangerDlt) {
+		this.passangerDtl = passangerDlt;
 	}
-	public Set<PassangerDtl> getPassangerDlt() {
-		return passangerDlt;
-	}
-	public void setPassangerDlt(Set<PassangerDtl> passangerDlt) {
-		this.passangerDlt = passangerDlt;
-	}
-	public long getLoggedInUserId() {
+	public String getLoggedInUserId() {
 		return loggedInUserId;
 	}
-	public void setLoggedInUserId(long loggedInUserId) {
+	public void setLoggedInUserId(String loggedInUserId) {
 		this.loggedInUserId = loggedInUserId;
 	}
-	public long getFlightId() {
+	public String getFlightId() {
 		return flightId;
 	}
-	public void setFlightId(long flightId) {
+	public void setFlightId(String flightId) {
 		this.flightId = flightId;
 	}
 }

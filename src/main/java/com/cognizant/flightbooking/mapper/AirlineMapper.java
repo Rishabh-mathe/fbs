@@ -35,6 +35,7 @@ class AddressCustomMapper extends CustomMapper<AirlineDto, Airline>{
 		airline.getOwnerAddress().clear();
 		airlineDto.getOwnerAddress().forEach(addressDto->{
 			Address address = new Address();
+			address.setId(addressDto.getId());
 			address.setCity(addressDto.getCity());
 			address.setPinCode(addressDto.getPinCode());
 			address.setStreet(addressDto.getStreet());
@@ -45,8 +46,8 @@ class AddressCustomMapper extends CustomMapper<AirlineDto, Airline>{
 		airlineDto.getFlightSchedules().forEach(flightsDto->{
 			FlightSchedule flightSchedule = new FlightSchedule();
 			flightSchedule.setTakeOff(flightsDto.getTakeOff());
+			flightSchedule.setFlightCode(flightsDto.getFlightCode());
 			flightSchedule.setLandingTime(flightsDto.getTakeOff());
-			flightSchedule.setAirCraft(flightsDto.getAirCraft());
 			flightSchedule.setDays(String.join(",",flightsDto.getDaysDto()));
 			flightSchedule.setBussinessClassSeats(flightsDto.getBussinessClassSeats());
 			flightSchedule.setBussinessClassSeatCost(flightsDto.getBussinessClassSeatCost());
@@ -69,6 +70,7 @@ class AddressCustomMapper extends CustomMapper<AirlineDto, Airline>{
 		airlineDto.getOwnerAddress().clear();
 		airline.getOwnerAddress().forEach(address->{
 			AddressDto addressDto = new AddressDto();
+			addressDto.setId(address.getId());
 			addressDto.setCity(address.getCity());
 			addressDto.setPinCode(address.getPinCode());
 			addressDto.setStreet(address.getStreet());
@@ -80,9 +82,10 @@ class AddressCustomMapper extends CustomMapper<AirlineDto, Airline>{
 		airlineDto.getFlightSchedules().clear();
 		airline.getFlightSchedules().forEach(flightSchedule->{
 			FlightScedulDto flightScheduleDto = new FlightScedulDto();
+			flightScheduleDto.setId(flightSchedule.getId());
 			flightScheduleDto.setTakeOff(flightSchedule.getTakeOff());
+			flightScheduleDto.setFlightCode(flightSchedule.getFlightCode());
 			flightScheduleDto.setLandingTime(flightSchedule.getTakeOff());
-			flightScheduleDto.setAirCraft(flightSchedule.getAirCraft());
 			flightScheduleDto.setDaysDto(flightSchedule.getDays().split(","));
 			flightScheduleDto.setBussinessClassSeats(flightSchedule.getBussinessClassSeats());
 			flightScheduleDto.setBussinessClassSeatCost(flightSchedule.getBussinessClassSeatCost());

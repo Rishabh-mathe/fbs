@@ -1,16 +1,16 @@
 package com.cognizant.flightbooking.dtos;
 
 public class PassangerDtlDto {
-	private long id;
+	private Long id;
 	private String passangerName;
 	private long passangerAge;
 	private String foodType;
-	private Character gender;
+	private String gender;
 	private String ticketStatus;
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getTicketStatus() {
@@ -37,10 +37,10 @@ public class PassangerDtlDto {
 	public void setFoodType(String foodType) {
 		this.foodType = foodType;
 	}
-	public Character getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(Character gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 }

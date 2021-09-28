@@ -30,8 +30,8 @@ public class FlightBookingMapper extends ConfigurableMapper {
 class customPassangerMapper extends CustomMapper<BookFlightDto, BookFlightTicket>{
 	@Override
 	public void mapAtoB(final BookFlightDto bookFlightDto,final BookFlightTicket bookFlightTicket, MappingContext context) {
-		bookFlightTicket.getPassangerDlt().clear();
-		bookFlightDto.getPassangerDlt().stream().forEach(passanger->{
+		bookFlightTicket.getPassangerDtl().clear();
+		bookFlightDto.getPassangerDtl().stream().forEach(passanger->{
 			PassangerDtl passangerDtl = new PassangerDtl();
 			passangerDtl.setId(passanger.getId());
 			passangerDtl.setFoodType(passanger.getFoodType());
@@ -39,14 +39,14 @@ class customPassangerMapper extends CustomMapper<BookFlightDto, BookFlightTicket
 			passangerDtl.setPassangerAge(passanger.getPassangerAge());
 			passangerDtl.setPassangerName(passanger.getPassangerName());
 			passangerDtl.setTicketStatus(passanger.getTicketStatus());
-			bookFlightTicket.getPassangerDlt().add(passangerDtl);
+			bookFlightTicket.getPassangerDtl().add(passangerDtl);
 		});
 	}
 	
 	@Override
 	public void mapBtoA(final BookFlightTicket bookFlightTicket,final BookFlightDto bookFlightDto, MappingContext context) {
-		bookFlightDto.getPassangerDlt().clear();
-		bookFlightTicket.getPassangerDlt().stream().forEach(passanger->{
+		bookFlightDto.getPassangerDtl().clear();
+		bookFlightTicket.getPassangerDtl().stream().forEach(passanger->{
 			PassangerDtlDto passangerDtl = new PassangerDtlDto();
 			passangerDtl.setId(passanger.getId());
 			passangerDtl.setFoodType(passanger.getFoodType());
@@ -54,7 +54,7 @@ class customPassangerMapper extends CustomMapper<BookFlightDto, BookFlightTicket
 			passangerDtl.setPassangerAge(passanger.getPassangerAge());
 			passangerDtl.setPassangerName(passanger.getPassangerName());
 			passangerDtl.setTicketStatus(passanger.getTicketStatus());
-			bookFlightDto.getPassangerDlt().add(passangerDtl);
+			bookFlightDto.getPassangerDtl().add(passangerDtl);
 		});
 	}
 }

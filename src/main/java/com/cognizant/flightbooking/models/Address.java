@@ -4,10 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -35,20 +37,18 @@ public class Address implements Serializable {
 	
 	private String state;
 	
-//	@JsonIgnore
-//	@JsonBackReference
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "airline_fk", updatable = false, insertable = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "airline_id", nullable = true)
 	private Airline airline;
 	
-	private long airline_fk;
+	private Long airline_fk;
 
-	public long getAirlineFk() {
+	public Long getAirline_fk() {
 		return airline_fk;
 	}
 
-	public void setAirlineFk(long airlineFk) {
-		this.airline_fk = airlineFk;
+	public void setAirline_fk(Long airline_fk) {
+		this.airline_fk = airline_fk;
 	}
 
 	public Airline getAirline() {

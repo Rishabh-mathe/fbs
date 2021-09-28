@@ -1,11 +1,13 @@
 package com.cognizant.flightbooking.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.cognizant.flightbooking.dtos.BookFlightDto;
@@ -31,35 +33,51 @@ public class BookFlightService {
 	@Autowired
 	private FlightScheduleRepo flightScheduleRepo;
 	
-	public ResponseEntity<String> saveBooking(BookFlightDto bookFlightDto) {
+	@Autowired
+    private UserRoleService userRoleService;
+	
+	@Transactional
+	public boolean aveBooking(BookFlightDto bookFlightDto) {
+		String userName = userRoleService.getUserName();
+		bookFlightDto.setLoggedInUserId(userName);
 		BookFlightTicket flightTicket = flightBookingMapper.map(bookFlightDto, BookFlightTicket.class);
-		Set<PassangerDtl> passangers = flightTicket.getPassangerDlt().stream().collect(Collectors.toSet());
-		flightTicket.getPassangerDlt().clear();
+		Set<PassangerDtl> passangers = flightTicket.getPassangerDtl().stream().collect(Collectors.toSet());
+		flightTicket.getPassangerDtl().clear();
 		Long selFlight = null;
-		if(flightTicket.getBookingClass() == "1C") {
-			selFlight = flightScheduleRepo.findById(flightTicket.getFlightId()).get().getFirstClassSeats();
+		if(flightTicket.getBookingClass().equals("FC")) {
+			selFlight = flightScheduleRepo.findByFlightCode(flightTicket.getFlightId()).get().getFirstClassSeats();
 		}
-		else if(flightTicket.getBookingClass() == "2C") {
-			selFlight = flightScheduleRepo.findById(flightTicket.getFlightId()).get().getSecondClassSeats();
+		else if(flightTicket.getBookingClass().equals("SC")) {
+			selFlight = flightScheduleRepo.findByFlightCode(flightTicket.getFlightId()).get().getSecondClassSeats();
 		}
-		else if(flightTicket.getBookingClass() == "3C") {
-			selFlight = flightScheduleRepo.findById(flightTicket.getFlightId()).get().getThirdClassSeats();
+		else if(flightTicket.getBookingClass().equals("TC")) {
+			selFlight = flightScheduleRepo.findByFlightCode(flightTicket.getFlightId()).get().getThirdClassSeats();
 		}
-		else if(flightTicket.getBookingClass() == "BC") {
-			selFlight = flightScheduleRepo.findById(flightTicket.getFlightId()).get().getBussinessClassSeats();
+		else if(flightTicket.getBookingClass().equals("BC")) {
+			selFlight = flightScheduleRepo.findByFlightCode(flightTicket.getFlightId()).get().getBussinessClassSeats();
 		}
-		Long availableSeats = selFlight - bookiFlightRepo.findByFlightIdAndDateOfJourneyAndBookingClass(flightTicket.getFlightId(),flightTicket.getDateOfJourney(),flightTicket.getBookingClass());
-//		BookFlightDto flightDto = null;
-		if(availableSeats >= flightTicket.getTotTickets()) {
+		Long bookedTkts = bookiFlightRepo.findByFlightIdAndDateOfJourneyAndBookingClass(flightTicket.getFlightId(),flightTicket.getDateOfJourney(),flightTicket.getBookingClass());
+		Long availableSeats = selFlight - (bookedTkts==null?0:bookedTkts);
+		if(availableSeats >= flightTicket.getTotTickets() || flightTicket.getId() != 0) {
 			BookFlightTicket bookedFlight = bookiFlightRepo.save(flightTicket);
 			passangers.stream().forEach(passanger-> {
-				passanger.setTicketStatus("booked");
 				passanger.setBookFlightTicket(bookedFlight);
 				passangerDtlRepo.save(passanger);
 			});
-//			flightDto = flightBookingMapper.map(bookedFlight, BookFlightDto.class);
-			return new ResponseEntity<String>("Booked Successfully", HttpStatus.OK);
+			return true;
 		}
-		return new ResponseEntity<String>(availableSeats+" Seats are available", HttpStatus.IM_USED);
+		return false;
+	}
+
+	public List<BookFlightTicket> getBookings() {
+		String userName = userRoleService.getUserName();
+		ArrayList<BookFlightTicket> mybookings = bookiFlightRepo.getMytickets(userName);
+		return mybookings;
+	}
+
+	public BookFlightDto getTicketInfo(Long id) {
+		BookFlightTicket mybookings = bookiFlightRepo.findById(id).get();
+		BookFlightDto myticket = flightBookingMapper.map(mybookings, BookFlightDto.class);
+		return myticket;
 	}
 }

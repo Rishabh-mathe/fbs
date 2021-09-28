@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class PassangerDtl implements Serializable{
 	/**
@@ -18,13 +20,13 @@ public class PassangerDtl implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private String passangerName;
 	private long passangerAge;
 	private String foodType;
-	private Character gender;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "book_flight_fk", nullable = false)
+	private String gender;
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "ticket_id", nullable = false)
 	private BookFlightTicket bookFlightTicket;
 	private String ticketStatus;
 	public String getTicketStatus() {
@@ -33,16 +35,17 @@ public class PassangerDtl implements Serializable{
 	public void setTicketStatus(String ticketStatus) {
 		this.ticketStatus = ticketStatus;
 	}
+	@JsonIgnore
 	public BookFlightTicket getBookFlightTicket() {
 		return bookFlightTicket;
 	}
 	public void setBookFlightTicket(BookFlightTicket bookFlightTicket) {
 		this.bookFlightTicket = bookFlightTicket;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getPassangerName() {
@@ -63,10 +66,10 @@ public class PassangerDtl implements Serializable{
 	public void setFoodType(String foodType) {
 		this.foodType = foodType;
 	}
-	public Character getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(Character gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 }

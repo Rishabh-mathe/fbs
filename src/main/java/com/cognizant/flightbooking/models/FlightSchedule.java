@@ -4,12 +4,16 @@ import java.time.LocalTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "flightCode")
@@ -18,7 +22,9 @@ public class FlightSchedule {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long flightCode;
+	private long id;
+	
+	private String flightCode;
 	
 	private LocalTime takeOff;
 	
@@ -52,21 +58,28 @@ public class FlightSchedule {
 	
 	private Long discount;
 	
-//	@JsonBackReference
-//	@ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "airline_fk", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "airline_id", nullable = false)
 	private Airline airline;
 	
-	private long airline_fk;
+	private Long airline_fk;
 
-	public long getAirlineFk() {
+	public Long getAirline_fk() {
 		return airline_fk;
 	}
 
-	public void setAirlineFk(long airlineFk) {
-		this.airline_fk = airlineFk;
+	public void setAirline_fk(Long airline_fk) {
+		this.airline_fk = airline_fk;
 	}
 	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public Long getDiscount() {
 		return discount;
 	}
@@ -139,10 +152,10 @@ public class FlightSchedule {
 	public void setToCity(Long toCity) {
 		this.toCity = toCity;
 	}
-	public long getFlightCode() {
+	public String getFlightCode() {
 		return flightCode;
 	}
-	public void setFlightCode(long flightCode) {
+	public void setFlightCode(String flightCode) {
 		this.flightCode = flightCode;
 	}
 	public LocalTime getTakeOff() {

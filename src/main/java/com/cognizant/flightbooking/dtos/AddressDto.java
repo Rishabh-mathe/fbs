@@ -3,6 +3,7 @@ package com.cognizant.flightbooking.dtos;
 import com.cognizant.flightbooking.models.Address;
 
 public class AddressDto {
+	private Long id;
 	private String street;
 	
 	private String pinCode;
@@ -10,6 +11,14 @@ public class AddressDto {
 	private String city;
 	
 	private String state;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getStreet() {
 		return street;
